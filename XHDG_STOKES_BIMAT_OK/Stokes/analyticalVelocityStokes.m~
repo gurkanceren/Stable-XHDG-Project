@@ -1,0 +1,4 @@
+function vel=analyticalVelocityStokes(X,mu)
+
+x=X(:,1); y=X(:,2);
+%vel = [x+y ; x-y]; 
