@@ -1,0 +1,61 @@
+function plotPostprocessedSolution(X,T,u,referenceElement,nDegRef)
+
+
+% Check input
+if nargin == 4
+    nDegRef = 40;
+end
+
+% Plotting element (equal spaced points)
+nodes = [];
+h = 1/nDegRef;
+for j = 0:nDegRef
+    i = (0:nDegRef-j)';
+    aux = j*ones(size(i));
+    nodes = [nodes; [i aux]*h];
+end
+nodes = 2*nodes - 1;
+npoints = size(nodes,1);
+
+% Delaunay triangulation of plotting element
+elemTriRef = delaunayn(nodes);
+%elemTriRef = delaunayn(nodes,{'QJ','QbB','Qc','Qx','Pp'});
+
+% Vandermonde matrix
+coordRef = referenceElement.NodesCoord;
+nOfNodes = size(coordRef,1);
+nDeg = referenceElement.degree;
+V = Vandermonde_LP(nDeg,coordRef);
+invV = inv(V');
+
+nOfElementNodes = size(coordRef,1);
+nOfElements = size(T,1);
+
+% Compute shape functions at interpolation points
+shapeFunctions = zeros(npoints,nOfNodes);
+for ipoint = 1:npoints
+    p = orthopoly2D(nodes(ipoint,:),nDeg);
+    shapeFunctions(ipoint,:) = (invV*p)';
+end
+
+% Loop in elements
+patchHandle = zeros(1,nOfElements);
+for ielem = 1:nOfElements
+
+    % Interpolate solution and position at interpolation points
+    Te_lin = T(ielem,1:3);
+    Xe = linearMapping(X(Te_lin,:),coordRef);
+    Xplot = shapeFunctions*Xe;
+    ind = (ielem-1)*nOfElementNodes+1:ielem*nOfElementNodes;
+    uplot = shapeFunctions*u(ind);
+
+    % Plot interpolated solution in the element
+    hold on
+    trisurf(elemTriRef,Xplot(:,1),Xplot(:,2),uplot)
+    %patchHandle(ielem) = patch('Faces',elemTriRef,'Vertices',Xplot,'FaceVertexCData',uplot,...
+    %    'FaceColor','interp','EdgeAlpha',0);
+    hold off
+end
+axis equal
+shading interp
+

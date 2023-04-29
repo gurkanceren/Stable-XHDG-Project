@@ -18,21 +18,23 @@
 
 clc, clear all, close all, %home
 restoredefaultpath, setpath
-
 % Stabilization parameter
 tau = 1;
 
 %Changing mesh name (for cluster)
+errors1=[];   errorspost1=[];
 
-for m=3 %mesh number
-    for p=2 %degree 
+for p=4 %mesh number
+    errors = []; errorsPost = []; hs=[];
+    for m=5 %degree 
         
         filename = ['mesh' num2str(m) '_P' num2str(p) ];
         display('Solving...')
         fname1=[filename '.dcm'];
         display(fname1)
         
-        
+        hs=[hs,0.5^(m+1)];
+
         % Load data
         meshName = fname1;
         if all(meshName(end-2:end)=='dcm')
@@ -53,7 +55,7 @@ for m=3 %mesh number
         
         figure(1),clf
         plotMesh(Elements,X,T)
-        
+
         figure(1); hold on;
         AddFrontPlot (example);
         hold on;
@@ -74,16 +76,37 @@ for m=3 %mesh number
         % Loop in elements
         disp('Loop in elements...')
         [K f QQ UU Qf Uf] = hdg_matrix(X,T,F,referenceElement,infoFaces,tau,LS,Elements);
-        
+        condest(K);
+
         %System Reduction
-        
         [Knew fnew uDirichlet CD unknowns nullFaces zeroRows]=SystemReduction(K,f,T,X,infoFaces,referenceElement);
-        
+
+        % Saved to be preconditioned
+        % [row, col, v] = find(Knew);
+        % writematrix(fnew,'rhs.txt')
+        % writematrix(row,'matrix_rows.txt')
+        % writematrix(col,'matrix_cols.txt')
+        % writematrix(v,'matrix_values.txt')
+
+        %save ( 'sparse_boundary.txt','row', 'col', 'v');
+        %save ('f_boundary.txt', 'fnew');
+
         condNu=condest(Knew);
-        
+
         % Face solution
         disp('Solving linear system...')
         lambda = Knew\fnew;
+
+
+        %after preconditioning
+        %preconditioned = readmatrix('CG-Solution.txt');
+        %preconditioned = readmatrix('CR-SOL.txt');
+        %preconditioned = readmatrix('BiCGSTAB-SOL.txt');
+        %preconditioned = readmatrix('ILU0-BiCGSTAB-Solution.txt');
+        %preconditioned = readmatrix('ILU0-CGS-Solution.txt');
+        %preconditioned = readmatrix('ILU0-CG-SOL-1D-16.txt');
+        %lambda=preconditioned;
+
         
         %Nodal Solution Rearrangement
         uhat=zeros(nOfFaceNodes*nOfFaces,1);
@@ -168,12 +191,9 @@ for m=3 %mesh number
         end
         ErrorPostInt = sqrt(sum(error_postint.^2));
         %disp(['Error HDG postprocessed Int= ', num2str(ErrorPostInt)]);
-
         
-        
-        
-        Error_global=sqrt(ErrorPostD1^2+ErrorPostInt^2);
-        disp(['Error HDG postprocessed = ', num2str(Error_global)]);
+        Error_global_post=sqrt(ErrorPostD1^2+ErrorPostInt^2);
+        disp(['Error HDG postprocessed = ', num2str(Error_global_post)]);
         disp(' ')
         
         
@@ -196,18 +216,18 @@ for m=3 %mesh number
         
         
         
-        % Plot solution
-        figure,clf
-        plotDiscontinuosSolution(X,T,u,referenceElement,20)
-        colorbar
-        title('HDG solution')
-        caxis([-1 1]);
-        
-        figure,clf
-        plotContinuosSolution(X,T,analiticalSolutionLaplace(X),referenceElement)
-        colorbar
-        title('HDG solution analytical')
-        caxis([-1 1]);
+%         % Plot solution
+%         figure,clf
+%         plotDiscontinuosSolution(X,T,u,referenceElement,20)
+%         colorbar
+%         title('HDG solution')
+%         caxis([-1 1]);
+%         
+%         figure,clf
+%         plotContinuosSolution(X,T,analiticalSolutionLaplace(X),referenceElement)
+%         colorbar
+%         title('HDG solution analytical')
+%         caxis([-1 1]);
        
         
         %plot faces
@@ -245,6 +265,24 @@ for m=3 %mesh number
 %         title('HDG solution numerical')
         
         %convergencePlots
+
+        %% ConvergencePlots
+        errors = [errors, Error_global];
+        errorsPost = [errorsPost, Error_global_post]; 
         
-     end
- end
+    end
+
+%% Other plots
+figure(20), clf
+plot(log10(hs),log10(errors),'-o',log10(hs),log10(errorsPost),'o-');
+legend('u','u*')
+
+slopes = (log10(errors(2:end))-log10(errors(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
+slopesPost = (log10(errorsPost(2:end))-log10(errorsPost(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
+ 
+
+errors1=[errors1 ; errors ];    
+errorspost1=[errorspost1 ; errorsPost];
+lhs = log10(hs);
+
+end

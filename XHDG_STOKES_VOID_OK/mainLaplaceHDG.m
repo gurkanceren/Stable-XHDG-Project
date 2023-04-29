@@ -25,7 +25,7 @@ meshName = 'mesh3_P3.dcm';
 if all(meshName(end-2:end)=='dcm'),GenerateMatFileFromEZ4U(['Meshes/' meshName]); end
 load(['Meshes/' meshName(1:end-3) 'mat']); 
 nOfElements = size(T,1); nOfElementNodesGeo = size(T,2);
-figure(1),clf,plotMesh(X,T)
+%figure(1),clf,plotMesh(X,T)
 %% HDG preprocess
 disp('HDG preprocess...')
 [F infoFaces] = hdg_preprocess(T);

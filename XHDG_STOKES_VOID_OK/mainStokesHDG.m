@@ -24,12 +24,12 @@ warning('off')
 
 meshNameS = cell(4,1);
 %meshNameS{1}='mesh1_P3.dcm';
-meshNameS{2}='mesh1_P4.dcm';
-meshNameS{3}='mesh2_P4.dcm';
-meshNameS{4}='mesh3_P4.dcm';
-meshNameS{5}='mesh4_P4.dcm';
+meshNameS{2}='mesh1_P2.dcm';
+meshNameS{3}='mesh2_P2.dcm';
+meshNameS{4}='mesh3_P2.dcm';
+meshNameS{5}='mesh4_P2.dcm';
 errors = []; errorsPost = []; hs=[];
-for i=5
+for i=3
     meshName=meshNameS{i};
     hs=[hs,0.5^(i+1)];
 %% Load computational mesh 
@@ -47,7 +47,7 @@ X = 2*X - 1; % modify the mesh to have it defined in [-1,1]
 disp('XHDG preprocess...')
 [F infoFaces] = hdg_preprocess(T);
 nOfFaces = max(max(F)); nOfExteriorFaces = size(infoFaces.extFaces,1);
-degreeApprox=4;
+degreeApprox=2;
 degreeGeo=size(elemInfo.faceNodes,2)-1;
 
 %%reference Element

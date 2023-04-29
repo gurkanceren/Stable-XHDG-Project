@@ -27,7 +27,7 @@ meshNameS{3}='mesh3_P3.dcm';
 meshNameS{4}='mesh4_P3.dcm';
 meshNameS{5}='mesh5_P3.dcm';
 errors = []; errorsPost = []; hs=[];
-for i=1:4
+for i=2
     meshName=meshNameS{i};
     hs=[hs,2/(2^i)];
 %% Load computational mesh 
