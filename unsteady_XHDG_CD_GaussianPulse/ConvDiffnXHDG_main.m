@@ -40,11 +40,12 @@ mu = 0.01;
 c_x = 0.8; 
 c_y = 0.8;
 % time-step:
-dt = 0.01;
+dt = 1e-5;
 % initialize time:
 time = 0;
 % time-integration count:
 cnt = 0;
+t_max= 1e-4;
 
 % upwind solution or central difference
 upwind = 0; %set upwind=1 for upwinding and upwind=0 for central differencing
@@ -52,7 +53,7 @@ upwind = 0; %set upwind=1 for upwinding and upwind=0 for central differencing
 errors1=[];   errorspost1=[];
 %Changing mesh name (for cluster)
 
-for p=3 %degree
+for p=4 %degree
     errors = []; errorsq = []; errorsPost = []; hs=[];
     for m=4 %mesh number 
         
@@ -109,7 +110,7 @@ for p=3 %degree
         %% Computation
         time=0;
          %% the time-loop starts here:
-         while(time<0.01) 
+         while(time<t_max) 
              %
              %u_old = u;
              time = time+dt; % update time
@@ -138,7 +139,7 @@ for p=3 %degree
         
              % Elemental solution
              %disp('Calculating element by element solution...')
-             [u,q]=computeElementsSolution(uhat,UU,QQ,Uf,Qf,T,F);
+             [u_analy,u,q]=computeElementsSolution(uhat,UU,QQ,Uf,Qf,T,F,time,X);
          end  
          %% the time-loop ends here.
 

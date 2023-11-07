@@ -78,12 +78,12 @@ for p=1 %degree
         figure(1),clf
         plotMesh(Elements,X,T)
         
-        figure(1); hold on;
-        AddFrontPlot (example);
-        hold on;
-        %AddElementNumber(X,T)
-        %axis([-1,1,-1,1])
-     
+        % figure(1); hold on;
+        % AddFrontPlot (example);
+        % % hold on;
+        % %AddElementNumber(X,T)
+        % axis([0,1,0,1])
+        % 
 
         
         %% HDG preprocess
@@ -235,8 +235,7 @@ for p=1 %degree
         disp(' ')
         
         
-       % disp('Saving the error data')
-        
+       % disp('Saving the error data')        
 %         %Create .output file  (for cluster)
 %         
 %         file=fopen(strcat('./', filename,'.output'),'w');
@@ -251,15 +250,15 @@ for p=1 %degree
 %         fprintf(file, '%g\n' , condNu);
 %         
 %         fclose(file);
-        
-        
-        
+
         % Plot solution
-        figure,clf
-        plotDiscontinuosSolution(X,T,u,referenceElement,20)
-        colorbar
-        title('HDG solution')
+        % figure,clf
+        % plotDiscontinuosSolution(X,T,u,referenceElement,20)
+        % colorbar
+        % title('HDG solution')
         %caxis([-1 1]);
+        PlotDiscontSol(u,X,T,LS,referenceElement,Elements)
+        title('XHDG solution', 'FontSize',10)
         
         figure,clf
         plotContinuosSolution(X,T,analiticalSolutionLaplace(X),referenceElement)

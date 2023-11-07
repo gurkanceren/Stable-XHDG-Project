@@ -49,9 +49,9 @@ errors1=[];   errorspost1=[];
 %Changing mesh name (for cluster)
 
 
-for p=1 %degree
+for p=4 %degree
     errors = []; errorsq = []; errorsPost = []; hs=[];
-    for m=5  %mesh number
+    for m=4  %mesh number
         
         filename = ['mesh' num2str(m) '_P' num2str(p) ];
         display('Solving...')
@@ -366,14 +366,17 @@ for p=1 %degree
         end
         %}
         %plot solution 3D
-        %{
-        u_analytical=analiticalSolutionLaplace(X);
-        PlotSol(5,u_analytical,X,T,LS,referenceElement,Elements)
-        title('HDG solution analytical')
         
-        PlotDiscontSol(6,u,X,T,LS,referenceElement,Elements)
-        title('HDG solution numerical')
-        %}
+        % u_analytical=analiticalSolutionLaplace(X);
+        % PlotSol(5,u_analytical,X,T,LS,referenceElement,Elements)
+        % title('HDG solution analytical')
+        % 
+        % PlotDiscontSol(6,u,X,T,LS,referenceElement,Elements)
+        % title('HDG solution numerical')
+
+        PlotDiscontSol(u,X,T,LS,referenceElement,Elements)
+        title('XHDG solution', 'FontSize',10)
+
         % convergencePlots
         
      %convergencePlots

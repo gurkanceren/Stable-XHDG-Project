@@ -1,4 +1,4 @@
-function PlotDiscontSol(fignum,u,X,T,LS,referenceElement,Elements)
+function PlotDiscontSol(u,X,T,LS,referenceElement,Elements)
 
 % Input:
 %  elementType: 0 for quadrilateral, 1 for triangle
@@ -24,7 +24,7 @@ zpg=2*zpg-1; % mapping onto the normal reference triangle
 zpg = [zpg;zVertices];
 
 
-figure(fignum); clf; hold on; 
+figure(1); clf; hold on; 
 %--------------------------------------------------------------------------
 % STANDARD ELEMENTS
 shapeFunctions1 = computeShapeFunctionsAtPoints(p,referenceElement.NodesCoord,zpg);
@@ -103,9 +103,10 @@ for i = 1:numel
     
 end
 
-view(3); 
+view(2); 
 grid on; axis tight
 set(gca,'FontSize',12)
+colormap ("jet")
 
 
 %--------------------------------------------------------------------------

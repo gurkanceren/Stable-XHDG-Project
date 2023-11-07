@@ -1,0 +1,41 @@
+function  [u,q]=computeElementsSolution(lambda,UU,QQ,Uf,Qf,T,F,Elements)
+ 
+nOfElements = size(T,1);
+nOfElementNodes = size(T,2);
+nOfFaces=max(max(F));
+nOfFaceNodes=(size(lambda,1)/(nOfFaces*2));
+
+%nOfFaceNodes = size(UU{1},2)/3;
+
+u = zeros(2*nOfElements*nOfElementNodes,1);
+q = zeros(4*nOfElements*nOfElementNodes,1);
+
+d1=[];
+d2=[];
+
+%Loop in elements
+for ielem=1:nOfElements
+    d1=find(ielem==Elements.D1);
+    d2=find(ielem==Elements.D2);
+    Fe = F(ielem,:);
+    aux = (1:2*nOfFaceNodes);
+    ind = [(Fe(1)-1)*2*nOfFaceNodes + aux,(Fe(2)-1)*2*nOfFaceNodes + aux,(Fe(3)-1)*2*nOfFaceNodes + aux];
+    aux= [(1:nOfFaceNodes) (2*nOfFaceNodes+1:3*nOfFaceNodes) (4*nOfFaceNodes+1:5*nOfFaceNodes)]; 
+    ind_std=ind(aux);
+    if isempty(d1) && isempty(d2)  % cut element
+    solutionu=UU{ielem}*lambda(ind) + Uf{ielem};
+    solutionq=QQ{ielem}*lambda(ind) + Qf{ielem};
+    elseif ~isempty(d1) || ~isempty(d2)  %standard elements 
+    solutionu=[UU{ielem}*lambda(ind_std) + Uf{ielem} ;  zeros(nOfElementNodes,1)]; 
+    solutionq=[QQ{ielem}*lambda(ind_std) + Qf{ielem}; zeros(2*nOfElementNodes,1)];   
+    end
+    u((ielem-1)*2*nOfElementNodes+(1:2*nOfElementNodes)) = solutionu;
+    q((ielem-1)*4*nOfElementNodes+(1:4*nOfElementNodes)) = solutionq;
+    
+    d1=[];
+    d2=[];
+       
+end
+
+
+
