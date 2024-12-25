@@ -32,9 +32,8 @@ else
     Vert0 = find(abs(LSe_Vertices)<tol);
     if length(Vert0) == 1
         Pts = FindPointsInterface(LSe, referenceElement);
-        %plot(Pts(:,1),Pts(:,2),'*r');
-        Pts=locatePointscurvedSegmentElement(referenceElement.NodesCoord1d,Pts);
-        %plot(Pts(:,1),Pts(:,2),'oc');
+        %Pts=locatePointscurvedSegmentElement(referenceElement.NodesCoord1d,Pts);
+        
         
         node0 = Vert0; 
         node1 = node0+1; if(node1) == 4, node1 = 1; end
@@ -64,14 +63,9 @@ else
             node2 = node0-1; if node2 == 0, node2 = 3; end
         end
         
-        
         Pts = FindPointsInterface(LSe, referenceElement);
-        figure(1); hold on;
+        %Pts=locatePointscurvedSegmentElement(referenceElement.NodesCoord1d,Pts);
         
-        %plot(Pts(:,1),Pts(:,2),'*r');
-        
-        Pts=locatePointscurvedSegmentElement(referenceElement.NodesCoord1d,Pts);
-        %plot(Pts(:,1),Pts(:,2),'oc');
         
         [zgp1,wgp1,vect_mu1] = ModQuadTri(Pts,Xe_ref(node0,:),zgp_tri,wgp_tri,zgp_qua,wgp_qua,mu_1,referenceElement);
         Pts_aux = [Xe_ref(node2,:); Xe_ref(node1,:)]; 
@@ -106,6 +100,16 @@ if ~isempty(zgp)
     AreaTri = norm(cross(v1,v2),2)/2;
     wgp = wgp*AreaTri/AreaRefTri;
 end
+
+
+
+
+
+
+
+
+
+
 
 
 

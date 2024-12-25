@@ -468,8 +468,8 @@ if  isempty(c) && isempty (d)
      y = Xe(:,2);
 %     
      q_analy=zeros(2*length(u_analy),1);
-     du_dx = 1+0.*x;
-     du_dy = 0+0.*y;
+     du_dx = 0+2.*x;
+     du_dy = 0+2.*y;
      q_analy(1:2:end)=-1.*du_dx;
      q_analy(2:2:end)=-1.*du_dy;
 %     

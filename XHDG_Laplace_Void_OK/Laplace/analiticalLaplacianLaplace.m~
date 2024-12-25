@@ -1,4 +1,4 @@
-function lap = analiticalLaplacianLaplace(X)
+function lap = analiticalLaplacianLaplace(X,mu)
 
 alpha = 0.1;
 beta = 0.3;
@@ -10,21 +10,15 @@ d = 3.4;
 x = X(:,1);
 y = X(:,2);
 
-% fun = 'exp(alpha*sin(a*x+b*y)+beta*cos(c*x+d*y))';
-% dfun_dx = 'eval(fun).*(a*alpha*cos(a*x+b*y)-c*beta*sin(c*x+d*y))';
-% dfun_dy = 'eval(fun).*(b*alpha*cos(a*x+b*y)-d*beta*sin(c*x+d*y))';
-% dfun2_dx2 = 'eval(dfun_dx).*(a*alpha*cos(a*x+b*y)-c*beta*sin(c*x+d*y)) - eval(fun).*(a^2*alpha*sin(a*x+b*y)+c^2*beta*cos(c*x+d*y))';
-% dfun2_dy2 = 'eval(dfun_dy).*(b*alpha*cos(a*x+b*y)-d*beta*sin(c*x+d*y)) - eval(fun).*(b^2*alpha*sin(a*x+b*y)+d^2*beta*cos(c*x+d*y))';
+fun = 'exp(alpha*sin(a*x+b*y)+beta*cos(c*x+d*y))';
+dfun_dx = 'eval(fun).*(a*alpha*cos(a*x+b*y)-c*beta*sin(c*x+d*y))';
+dfun_dy = 'eval(fun).*(b*alpha*cos(a*x+b*y)-d*beta*sin(c*x+d*y))';
+dfun2_dx2 = 'eval(dfun_dx).*(a*alpha*cos(a*x+b*y)-c*beta*sin(c*x+d*y)) - eval(fun).*(a^2*alpha*sin(a*x+b*y)+c^2*beta*cos(c*x+d*y))';
+dfun2_dy2 = 'eval(dfun_dy).*(b*alpha*cos(a*x+b*y)-d*beta*sin(c*x+d*y)) - eval(fun).*(b^2*alpha*sin(a*x+b*y)+d^2*beta*cos(c*x+d*y))';
 
-fun = 'x^2+y^2';
-dfun_dx = '2*x';
-dfun_dy = '2*y';
-dfun2_dx2 = '2';
-dfun2_dy2 = '2';
-
-% fun = 'sin(pi*x)*sin(pi*y)';
-% dfun2_dx2 = '-pi^2*sin(pi*x)*sin(pi*y)';
-% dfun2_dy2 = '-pi^2*sin(pi*x)*sin(pi*y)';
+%fun = 'exp(x)';
+%dfun2_dx2 = 'exp(x)';
+%dfun2_dy2 = '-pi^2*sin(pi*x)*sin(pi*y)';
 
 
 % lap = eval(dfun2_dx2) + eval(dfun2_dy2);
@@ -35,6 +29,6 @@ dfun2_dy2 = '2';
 % dfun2_dy2 = '-pi^2*cos(pi*(x-0.5))*cos(pi*(y-0.5))';
 
 
-lap = eval(dfun2_dx2) + eval(dfun2_dy2);
+lap =eval(dfun2_dx2)+eval(dfun2_dy2);
 
-%lap = zeros(size(lap));
+lap = mu*2*ones(size(lap));

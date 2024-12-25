@@ -53,9 +53,9 @@ upwind = 0; %set upwind=1 for upwinding and upwind=0 for central differencing
 errors1=[];   errorspost1=[];
 %Changing mesh name (for cluster)
 
-for p=4 %degree
+for p=1 %degree
     errors = []; errorsq = []; errorsPost = []; hs=[];
-    for m=4 %mesh number 
+    for m=1 %mesh number 
         
         filename = ['mesh' num2str(m) '_P' num2str(p) ];
         display('Solving...')

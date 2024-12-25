@@ -15,7 +15,7 @@
 %    boundary sides)
 %
 
-clc, clear all, close all, %home
+%clc, clear all, close all, %home
 restoredefaultpath, setpath
 warning off
 
@@ -29,7 +29,7 @@ R=0.5;
 
 errors1=[];   errorspost1=[];
 
-for p=3  % change between 1-3
+for p=1  % change between 1-3
     
 %%%peraire example
 meshNameS = cell(3,1);
@@ -38,12 +38,13 @@ meshNameS{1}=['mesh2_P',PP,'.dcm'];
 meshNameS{2}=['mesh3_P',PP,'.dcm'];
 meshNameS{3}=['mesh4_P',PP,'.dcm'];
 meshNameS{4}=['mesh5_P',PP,'.dcm'];
+meshNameS{5}=['mesh6_P',PP,'.dcm'];
 
 
 errors = []; errorsPost = []; hs=[];
 normsL2JumpU=[]; normsL2JumpFlux=[]; normsL2JumpUstar=[];
 
-for i=2
+for i=1:5
     meshName=meshNameS{i};
     hs=[hs,0.5^(i+1)];
         % Load data
@@ -73,27 +74,27 @@ for i=2
         AddFrontPlot (example,X);
         hold on;
         %AddElementNumber(X,T);
-        
-        if p==3 && i==4 
-%-----------------------------------------------------------------------------------------------------------------         
-        centre=[0,0];
-        T1 = T(1,:);
-        elementSize=min(norm(X(T1(1),:)-X(T1(2),:)),norm(X(T1(1),:)-X(T1(3),:)));
-%        [X,LS,movedNodes]=modifyMeshToAvoidIllConditioning(0.1*elementSize,Elements,X,T,LS,referenceElement);
-        %estimate of mesh size (length of a face)
-%         T1 = T(1,:); elementSize=min(norm(X(T1(1),:)-X(T1(2),:)),norm(X(T1(1),:)-X(T1(3),:)));
-         [X,movedElements,movedNodes]=modifyMeshToAvoidIllConditioningCircle(centre,R,0.1*elementSize,X,T,referenceElement);  
-         LS = sqrt((X(:,1)-centre(1)).^2+(X(:,2)-centre(2)).^2)-R;
-         
-          %Classification of elements for modified mesh
-          Elements = SetElements(T,LS,[1,0],referenceElement);
-        
-         figure(2),clf
-         plotMesh(X,T,Elements)
-         figure(2); hold on;
-         AddFrontPlot (example,X);
-        end
-%------------------------------------------------------------------------------------------------------------------
+% 
+%         if p==3 && i==4 
+% %-----------------------------------------------------------------------------------------------------------------         
+%         centre=[0,0];
+%         T1 = T(1,:);
+%         %elementSize=min(norm(X(T1(1),:)-X(T1(2),:)),norm(X(T1(1),:)-X(T1(3),:)));
+%        % [X,LS,movedNodes]=modifyMeshToAvoidIllConditioning(0.1*elementSize,Elements,X,T,LS,referenceElement);
+%         %estimate of mesh size (length of a face)
+% %         T1 = T(1,:); elementSize=min(norm(X(T1(1),:)-X(T1(2),:)),norm(X(T1(1),:)-X(T1(3),:)));
+%          [X,movedElements,movedNodes]=modifyMeshToAvoidIllConditioningCircle(centre,R,0.1*elementSize,X,T,referenceElement);  
+%          LS = sqrt((X(:,1)-centre(1)).^2+(X(:,2)-centre(2)).^2)-R;
+% 
+%           %Classification of elements for modified mesh
+%           Elements = SetElements(T,LS,[1,0],referenceElement);
+% 
+%          figure(2),clf
+%          plotMesh(X,T,Elements)
+%          figure(2); hold on;
+%          AddFrontPlot (example,X);
+%         end
+% %------------------------------------------------------------------------------------------------------------------
 
                
         myvector=(1:length(X));
@@ -158,7 +159,7 @@ for i=2
         %plotJumpsOnInterface
         
         %% Plot solution
-        PlotSolution
+        %PlotSolution
         
         
         %% ConvergencePlots

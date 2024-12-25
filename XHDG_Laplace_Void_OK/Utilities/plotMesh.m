@@ -54,12 +54,12 @@ patchFaces2 = T(Elements.D2,oFaceNodes);
 patchFaces3 = T(Elements.Int,oFaceNodes);
 
 %Plot mesh
-patchHandle = patch('Faces',patchFaces1,'Vertices',X,'FaceColor',0.4*[1 1 1],'EdgeAlpha',1);
+patchHandle = patch('Faces',patchFaces1,'Vertices',X,'FaceColor',[0 0.8 0.8],'EdgeAlpha',1);
 axis equal
 hold on
 patchHandle2 = patch('Faces',patchFaces2,'Vertices',X,'FaceColor',[1 1 1],'EdgeAlpha',1);
 hold on
-patchHandle3 = patch('Faces',patchFaces3,'Vertices',X,'FaceColor',0.6*[1 1 1],'EdgeAlpha',1);
+patchHandle3 = patch('Faces',patchFaces3,'Vertices',X,'FaceColor',[1 0.6 0],'EdgeAlpha',1);
 
 %Optional plots
 % if nargin > 2

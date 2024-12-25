@@ -27,6 +27,9 @@ elseif order==8
     gPts = 25;
 elseif order==10
   gPts = 25;
+  elseif order==12
+  order=15;
+  gPts = 54;
 elseif order ==15 
   gPts =  54;
 elseif order ==20

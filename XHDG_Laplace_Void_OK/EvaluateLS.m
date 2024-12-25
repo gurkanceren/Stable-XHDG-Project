@@ -6,7 +6,7 @@ function LS = EvaluateLS(X, example)
 
 if example == 1
     P0 = [0,0];  
-    r0 = 0.5; 
+    r0 = 0.41; 
     LS = sqrt((X(:,1) - P0(1)).^2 + (X(:,2) - P0(2)).^2) - r0;
 else
     y1 = -0.5; y2 = 0.25;

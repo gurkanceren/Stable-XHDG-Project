@@ -10,11 +10,10 @@ d = 3.4;
 x = X(:,1);
 y = X(:,2);
 
-
- u0 = exp(alpha*sin(a*x+b*y)+beta*cos(c*x+d*y));
-
 %u0=x;
-%u0=zeros(size(u0));
+u0 = exp(alpha*sin(a*x+b*y)+beta*cos(c*x+d*y));
+
+%u0=x.^2;
 
  %u0 = sin(pi*x).*sin(pi*y);
  

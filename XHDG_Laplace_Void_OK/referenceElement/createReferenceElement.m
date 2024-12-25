@@ -126,8 +126,8 @@ end
 
 %Compute shape functions and quadrature
 if isempty(varargin)
-         %nOfGaussPoints = nDeg + 2;
-    nOfGaussPoints = 2*nDeg + 1;
+         nOfGaussPoints = nDeg + 2;
+    %nOfGaussPoints = 2*nDeg + 1;
 else
     nOfGaussPoints = varargin{:};
 end

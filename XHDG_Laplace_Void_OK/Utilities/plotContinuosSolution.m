@@ -27,7 +27,11 @@ else
 end
 
 %Plot
-patch('Faces',tri,'Vertices',X,'FaceVertexCData',u,...
-    'FaceColor','interp','EdgeAlpha',0);
+patch('Faces',tri,'Vertices',X,'FaceVertexCData',u,'FaceColor','interp','EdgeAlpha',0);
+grid off 
+% set(p,'FaceColor','gray','EdgeColor','gray'); 
+% 
+% shading interp
+
 axis equal
 

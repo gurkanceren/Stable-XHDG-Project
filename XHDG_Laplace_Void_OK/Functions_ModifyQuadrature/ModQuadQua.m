@@ -11,15 +11,15 @@ function [zgp,wgp,vect_mu] = ModQuadQua(Pts_int,Pts_aux,zgp_tri,wgp_tri,zgp_qua,
 %    referenceElement
 
 
-tol = norm(Pts_int(1,:) - Pts_int(end,:))*1e-20;
+tol = norm(Pts_int(1,:) - Pts_int(end,:))*1e-10;
 
 p = referenceElement.degree; 
 Xe_ref_1D = referenceElement.NodesCoord1d; 
 
 if norm(Pts_int(1,:)-Pts_aux(1,:))<tol ||  norm(Pts_int(end,:)-Pts_aux(1,:))<tol
-    [zgp,wgp,vect_mu] = ModQuadTri(Pts_int,Pts_aux(:,2),zgp_tri,wgp_tri,zgp_qua,wgp_qua,mu,referenceElement); 
+    [zgp,wgp,vect_mu] = ModQuadTri(Pts_int,Pts_aux(:,2)',zgp_tri,wgp_tri,zgp_qua,wgp_qua,mu,referenceElement); 
 elseif norm(Pts_int(1,:)-Pts_aux(2,:))<tol ||  norm(Pts_int(end,:)-Pts_aux(2,:))<tol
-    [zgp,wgp,vect_mu] = ModQuadTri(Pts_int,Pts_aux(:,1),zgp_tri,wgp_tri,zgp_qua,wgp_qua,mu,referenceElement); 
+    [zgp,wgp,vect_mu] = ModQuadTri(Pts_int,Pts_aux(:,1)',zgp_tri,wgp_tri,zgp_qua,wgp_qua,mu,referenceElement); 
 else
     [Pts_int,Pts_aux] = CheckOrientation(Pts_int,Pts_aux);
 

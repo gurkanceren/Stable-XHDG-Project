@@ -1,4 +1,4 @@
-function lap = analiticalLaplacianLaplace(X)
+function lap = analiticalLaplacianLaplace(X,mu)
 
 alpha = 0.1;
 beta = 0.3;
@@ -29,6 +29,6 @@ dfun2_dy2 = 'eval(dfun_dy).*(b*alpha*cos(a*x+b*y)-d*beta*sin(c*x+d*y)) - eval(fu
 % dfun2_dy2 = '-pi^2*cos(pi*(x-0.5))*cos(pi*(y-0.5))';
 
 
-lap =eval(dfun2_dx2)+eval(dfun2_dy2);
+lap =mu*(eval(dfun2_dx2)+eval(dfun2_dy2));
 
-%lap = 2*ones(size(lap));
+%lap = mu*0*ones(size(lap));

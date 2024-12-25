@@ -50,7 +50,7 @@
 
          
         Error_standard_post = sqrt(sum(error_standard_post.^2));
-        %disp(['XHDG Error on Standard Elements PostProcessed  = ', num2str(Error_standard_post)]);
+        disp(['XHDG Error on Standard Elements PostProcessed  = ', num2str(Error_standard_post)]);
         
         
         for i= 1:length(Elements.Int)
@@ -64,7 +64,7 @@
         end
 
         Error_cut_post = sqrt(sum(error_cut_post.^2));
-        %disp(['XHDG Error over Cut Elements PostProcessed= ', num2str(Error_cut_post)]);
+        disp(['XHDG Error over Cut Elements PostProcessed= ', num2str(Error_cut_post)]);
                 
         Error_total_post=sqrt(Error_cut_post^2+Error_standard_post^2);
         disp(['XHDG Error Overall Domain Postprocessed = ', num2str(Error_total_post)]);

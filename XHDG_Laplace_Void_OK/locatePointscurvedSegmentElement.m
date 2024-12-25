@@ -15,7 +15,6 @@ p=length(coord1D0)-1; %degree
 
 %Computation of the lengths
 l = zeros(p+1,1);
-
 for i=2:p+1
    [z,w]=gaussLegendre(p,-1,coord1D0(i)); %quadrature for [-1,s_i]
    shapeFunctions = computeShapeFunctionsAtPoints(p,coord1D0,z);

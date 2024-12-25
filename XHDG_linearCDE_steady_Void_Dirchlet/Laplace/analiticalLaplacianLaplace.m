@@ -71,7 +71,7 @@ end
 x = X(:,1);
 y = X(:,2);
 
-%{
+
 %***compute du/dx***
 trmA = sin(pi*x)+pi.*cos(pi*x);
 du_dx = exp(x+y).*sin(pi*y).*trmA;
@@ -88,15 +88,15 @@ du_dy = exp(x+y).*sin(pi*x).*trmB;
 trmBA = pi.*cos(pi*y)-pi^2.*sin(pi*y);
 trmBB = exp(x+y).*sin(pi*x).*trmBA;
 d2u_dy2 = du_dy + trmBB;
-%}
 
 
-%
+
+%{
 du_dx = 1+0.*x;
 du_dy = 0+0.*y;
 d2u_dx2 = 0+0.*y;
 d2u_dy2 = 0+0.*x;
-%
+%}
 
 %{
 du_dx = 1+0.*x;
@@ -105,12 +105,14 @@ d2u_dx2 = 0.*x;
 d2u_dy2 = 0.*y;
 %}
 
+
 %{
 du_dx = 0+2.*x;
 du_dy = 0+2.*y;
 d2u_dx2 = 2+0.*x;
 d2u_dy2 = 2+0.*y;
 %}
+
 
 %{
 du_dx = 0+1.*y;

@@ -47,7 +47,7 @@ errors1=[];   errorspost1=[];
 
 for p=1 %degree
     errors = []; errorsq = []; errorsPost = []; hs=[];
-    for m=1 %mesh number 
+    for m=1:4 %mesh number 
         
         filename = ['mesh' num2str(m) '_P' num2str(p) ];
         display('Solving...')
@@ -194,8 +194,8 @@ for p=1 %degree
         
         
         
-        Errorq_global=sqrt(Error_cut^2+Error_D1^2);
-        disp(['Error HDG for q = ', num2str(Errorq_global)]);
+        %Errorq_global=sqrt(Error_cut^2+Error_D1^2);
+        %disp(['Error HDG for q = ', num2str(Errorq_global)]);
 
         
         % Relative error for the postprocessed solution of u:
@@ -259,11 +259,11 @@ for p=1 %degree
         %caxis([-1 1]);
         PlotDiscontSol(u,X,T,LS,referenceElement,Elements)
         title('XHDG solution', 'FontSize',10)
-        
-        figure,clf
-        plotContinuosSolution(X,T,analiticalSolutionLaplace(X),referenceElement)
-        colorbar
-        title('HDG solution analytical')
+        % 
+        % figure,clf
+        % plotContinuosSolution(X,T,analiticalSolutionLaplace(X),referenceElement)
+        % colorbar
+        % title('HDG solution analytical')
         %caxis([-1 1]);
        
         
@@ -304,7 +304,7 @@ for p=1 %degree
         %convergencePlots
         %% ConvergencePlots
         errors = [errors, Error_global];
-        errorsq = [errorsq, Errorq_global];
+        %errorsq = [errorsq, Errorq_global];
         errorsPost = [errorsPost, Error_global_post]; 
         
     end
@@ -314,12 +314,7 @@ for p=1 %degree
     legend('u','u*')
 
     slopes = (log10(errors(2:end))-log10(errors(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
-    slopesq = (log10(errorsq(2:end))-log10(errorsq(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
+    %slopesq = (log10(errorsq(2:end))-log10(errorsq(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
     slopesPost = (log10(errorsPost(2:end))-log10(errorsPost(1:end-1)))./(log10(hs(2:end))-log10(hs(1:end-1)))
- 
-
-    errors1=[errors1 ; errors];    
-    errorspost1=[errorspost1 ; errorsPost];
-    lhs = log10(hs);
     
  end

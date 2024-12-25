@@ -1,4 +1,4 @@
-function [KKnew fnew uDirichlet CD unknowns nullFaces zeroRows]=SystemReduction(KKold,fold,T,X,infoFaces,referenceElement)
+function [KKnew, fnew, uDirichlet, CD, unknowns, nullFaces, zeroRows]=SystemReduction(KKold,fold,T,X,infoFaces,referenceElement)
 
 %Dirichlet BC
 %Dirichlet face nodal coordinates
@@ -9,8 +9,8 @@ nOfFaceNodes = size(referenceElement.NodesCoord1d,1);
 nOfFaces=size(infoFaces.intFaces,1)+size(infoFaces.extFaces,1);
 
 XDirichlet=computeNodalCoordinatesFaces(infoFaces.extFaces,X,T,referenceElement);
-figure(1), hold on, h=plot(XDirichlet(:,1),XDirichlet(:,2),'*','Color',[0 1 0]);
-legend([h],'Dirichlet Boundary')
+%figure(1), hold on, h=plot(XDirichlet(:,1),XDirichlet(:,2),'or','Markersize',4,'LineWidth',3);
+%legend([h],'Dirichlet Boundary')
 uDirichlet = DirichletCondition(XDirichlet);
 degree=referenceElement.degree;
 

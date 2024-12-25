@@ -14,15 +14,15 @@ nDeg = referenceElement.degree;
 V = Vandermonde_LP(nDeg,coordRef);
 %invV = inv(V');
 
-% % Compute shape functions at interpolation points
-% shapeFunctions = zeros(npoints,nOfNodes);
-% for ipoint = 1:npoints
-%     p = orthopoly2D(coordRef_star(ipoint,:),nDeg);
-%     shapeFunctions(ipoint,:) = (V'\p)';
-% end
+% Compute shape functions at interpolation points
+N = zeros(npoints,nOfNodes);
+for ipoint = 1:npoints
+    p = orthopoly2D(coordRef_star(ipoint,:),nDeg);
+    N(ipoint,:) = (V'\p)';
+end
 
 %Shape functions for interpolation of nodal values
-[N,dNdxi,dNdeta]=evaluateNodalBasisTri(coordRef_star,coordRef,nDeg);
+%[N,dNdxi,dNdeta]=evaluateNodalBasisTri(coordRef_star,coordRef,nDeg);
 
 
 % u star initialization
